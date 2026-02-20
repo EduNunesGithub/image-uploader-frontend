@@ -1,15 +1,14 @@
 @import 'tailwindcss';
 
-body {
-  @apply m-0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-    'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@theme {
+  --breakpoint-sm: 30rem;
+  --breakpoint-md: 60rem;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --spacing-page-container: 69.5rem;
 }
 
-code {
-  font-family:
-    source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+@layer base {
+  button {
+    @apply cursor-pointer;
+  }
 }

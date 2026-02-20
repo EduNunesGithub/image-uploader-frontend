@@ -1,12 +1,17 @@
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { TanStackDevtools } from '@tanstack/react-devtools';
-
-import Header from '../components/Header';
+import { twMerge } from 'tailwind-merge';
+import { Header } from '@/components/header';
+import { getOrInitTheme } from '@/server/theme';
 
 import appCss from '../styles.css?url';
 
 export const Route = createRootRoute({
+  beforeLoad: async () => {
+    const theme = await getOrInitTheme();
+    return { theme };
+  },
   head: () => ({
     meta: [
       {
@@ -27,16 +32,24 @@ export const Route = createRootRoute({
       },
     ],
   }),
+
   shellComponent: RootDocument,
 });
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const { theme } = Route.useRouteContext();
+
   return (
-    <html lang="en">
+    <html className={theme} lang="en">
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body
+        className={twMerge(
+          'duration-200 ease-standard transition-all',
+          theme === 'dark' ? 'bg-[#121826]' : 'bg-[#F9FAFB]',
+        )}
+      >
         <Header />
         {children}
         <TanStackDevtools

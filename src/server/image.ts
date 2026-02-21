@@ -27,5 +27,5 @@ export const uploadImage = createServerFn({ method: 'POST' })
     });
 
     if (!response.ok) throw new Error('Upload failed');
-    return response.json();
+    return response.json() as Promise<Image>;
   });

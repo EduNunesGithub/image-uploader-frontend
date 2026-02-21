@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { useNavigate } from '@tanstack/react-router';
 import Dropzone from 'react-dropzone';
 import { twMerge } from 'tailwind-merge';
 import { ProgressBar } from '@/components/progress-bar';
@@ -6,6 +7,8 @@ import { useTheme } from '@/hooks/use-theme';
 import { uploadImage } from '@/server/image';
 
 export const ImageDropZone = () => {
+  const navigate = useNavigate();
+
   const { theme } = useTheme();
 
   const { mutate, status } = useMutation({
@@ -14,6 +17,9 @@ export const ImageDropZone = () => {
       formData.append('file', file);
       return uploadImage({ data: formData });
     },
+    onError: async (err) => console.error(err.message),
+    onSuccess: async ({ id }) =>
+      navigate({ to: '/images/$id', params: { id: String(id) } }),
   });
 
   const onDrop = (acceptedFiles: File[]) => {

@@ -1,10 +1,15 @@
 import { useMutation } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
 import Dropzone from 'react-dropzone';
+import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { ProgressBar } from '@/components/progress-bar';
 import { useTheme } from '@/hooks/use-theme';
 import { uploadImage } from '@/server/image';
+
+type MutationError = {
+  message: string;
+}[];
 
 export const ImageDropZone = () => {
   const navigate = useNavigate();
@@ -17,7 +22,10 @@ export const ImageDropZone = () => {
       formData.append('file', file);
       return uploadImage({ data: formData });
     },
-    onError: async (err) => console.error(err.message),
+    onError: async (err) => {
+      const erros = JSON.parse(err.message) as MutationError;
+      erros.forEach((error) => toast(error.message));
+    },
     onSuccess: async ({ id }) =>
       navigate({ to: '/images/$id', params: { id: String(id) } }),
   });
@@ -38,6 +46,7 @@ export const ImageDropZone = () => {
               theme === 'dark'
                 ? 'bg-[#212936] border-[#4D5562]'
                 : 'bg-white border-[#E5E7EB]',
+              status === 'error' && 'border-red-500',
             )}
             {...getRootProps()}
           >
@@ -45,6 +54,7 @@ export const ImageDropZone = () => {
               className={twMerge(
                 'border border-dashed duration-200 ease-standard flex flex-col items-center justify-center rounded-lg transition-all w-full',
                 theme === 'dark' ? 'border-[#4D5562]' : 'border-[#E5E7EB]',
+                status === 'error' && 'border-red-500',
               )}
             >
               <input {...getInputProps()} />

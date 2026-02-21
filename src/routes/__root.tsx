@@ -7,6 +7,7 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { TanStackDevtools } from '@tanstack/react-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtoolsPanel } from '@tanstack/react-query-devtools';
+import { Toaster } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { Header } from '@/components/header';
 import { getOrInitTheme } from '@/server/theme';
@@ -50,11 +51,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body
         className={twMerge(
-          'auto-rows-min duration-200 grid grid-cols-1 grid-rows-[auto_1fr] ease-standard min-h-dvh transition-all w-full',
+          'auto-rows-min duration-200 grid grid-cols-1 grid-rows-[auto_auto_1fr] ease-standard min-h-dvh transition-all w-full',
           theme === 'dark' ? 'bg-[#121826]' : 'bg-[#F9FAFB]',
         )}
       >
         <QueryClientProvider client={queryClient}>
+          <Toaster />
           <Header />
           {children}
           <TanStackDevtools

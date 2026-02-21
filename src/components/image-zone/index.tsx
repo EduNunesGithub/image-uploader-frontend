@@ -1,5 +1,6 @@
 import React from 'react';
 import { Download, Link } from 'lucide-react';
+import { toast } from 'sonner';
 import { twMerge } from 'tailwind-merge';
 import { Button } from '@/components/button';
 import { useTheme } from '@/hooks/use-theme';
@@ -13,6 +14,7 @@ export const ImageZone: React.FC<ImageZoneProps> = ({ image }) => {
 
   const handleShare = async () => {
     await navigator.clipboard.writeText(window.location.href);
+    toast('Link copied to clipboard.');
   };
 
   const handleDownload = async () => {

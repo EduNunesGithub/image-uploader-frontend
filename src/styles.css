@@ -4,10 +4,15 @@
   --breakpoint-sm: 30rem;
   --breakpoint-md: 60rem;
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --font-inter: 'Inter', sans-serif;
   --spacing-page-container: 69.5rem;
 }
 
 @layer base {
+  * {
+    @apply antialiased font-inter tracking-tight;
+  }
+
   button {
     @apply cursor-pointer;
   }

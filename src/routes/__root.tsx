@@ -42,16 +42,28 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html className={theme} lang="en">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin=""
+        />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+          rel="stylesheet"
+        />
         <HeadContent />
       </head>
       <body
         className={twMerge(
-          'duration-200 ease-standard transition-all',
+          'auto-rows-min duration-200 grid grid-cols-1 grid-rows-[auto_1fr] ease-standard min-h-dvh transition-all w-full',
           theme === 'dark' ? 'bg-[#121826]' : 'bg-[#F9FAFB]',
         )}
       >
         <Header />
+
         {children}
+
         <TanStackDevtools
           config={{
             position: 'bottom-right',

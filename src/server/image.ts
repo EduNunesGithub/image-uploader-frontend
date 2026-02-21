@@ -1,6 +1,10 @@
 import { createServerFn } from '@tanstack/react-start';
 import { z } from 'zod';
 
+const GetImageSchema = z.object({
+  id: z.number().int().positive(),
+});
+
 const UploadSchema = z.object({
   file: z
     .file()
@@ -10,6 +14,17 @@ const UploadSchema = z.object({
       'Only JPG, PNG and GIF are allowed',
     ),
 });
+
+export const getImage = createServerFn({ method: 'GET' })
+  .inputValidator(GetImageSchema)
+  .handler(async ({ data }) => {
+    const response = await fetch(
+      `${process.env.API_URL}/api/images/${data.id}`,
+    );
+
+    if (!response.ok) throw new Error('Image not found');
+    return response.json() as Promise<Image>;
+  });
 
 export const uploadImage = createServerFn({ method: 'POST' })
   .inputValidator((data) => {

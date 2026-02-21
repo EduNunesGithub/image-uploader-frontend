@@ -17,3 +17,15 @@
     @apply cursor-pointer;
   }
 }
+
+@layer utilities {
+  @keyframes progress {
+    0% {
+      left: -52px;
+    }
+
+    100% {
+      left: 100%;
+    }
+  }
+}
